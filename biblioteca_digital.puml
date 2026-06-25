@@ -1,0 +1,142 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Rol {
+    - idRol : int
+    - nombreRol : String
+    - descripcion : String
+    + crearRol()
+    + editarRol()
+    + eliminarRol()
+}
+
+class Usuario {
+    - idUsuario : int
+    - usuario : String
+    - correo : String
+    - password : String
+    - estado : String
+    - fechaCreacion : Date
+    + iniciarSesion()
+    + cerrarSesion()
+    + registrar()
+    + actualizar()
+}
+
+class Estudiante {
+    - idEstudiante : int
+    - carnet : String
+    - nombreCompleto : String
+    - carrera : String
+    - telefono : String
+    - correo : String
+    - estado : String
+    + registrar()
+    + editar()
+    + eliminar()
+    + buscar()
+}
+
+class Editorial {
+    - idEditorial : int
+    - nombreEditorial : String
+    - estado : String
+    + registrarEditorial()
+    + editarEditorial()
+    + eliminarEditorial()
+}
+
+class Libro {
+    - idLibro : int
+    - codigoLibro : String
+    - titulo : String
+    - idEditorial : int
+    - anioPublicacion : int
+    - cantidad : int
+    - disponibles : int
+    - estado : String
+    + agregarLibro()
+    + editarLibro()
+    + eliminarLibro()
+    + buscarLibro()
+    + actualizarStock()
+}
+
+class Autor {
+    - idAutor : int
+    - nombre : String
+    - apellido : String
+    - nacionalidad : String
+    - fechaNacimiento : Date
+    + registrarAutor()
+    + editarAutor()
+    + eliminarAutor()
+}
+
+class Categoria {
+    - idCategoria : int
+    - nombreCategoria : String
+    - descripcion : String
+    + crearCategoria()
+    + editarCategoria()
+    + eliminarCategoria()
+}
+
+class LibroCategoria {
+    - idLibroCategoria : int
+    - idLibro : int
+    - idCategoria : int
+    + asignarCategoria()
+    + quitarCategoria()
+}
+
+class AutorLibro {
+    - idAutorLibro : int
+    - idLibro : int
+    - idAutor : int
+    + asignarAutor()
+    + quitarAutor()
+}
+
+class Prestamo {
+    - idPrestamo : int
+    - fechaPrestamo : Date
+    - fechaDevolucion : Date
+    - estado : String
+    + registrarPrestamo()
+    + devolverLibro()
+    + cancelarPrestamo()
+}
+
+class DetallePrestamo {
+    - idDetalle : int
+    - idPrestamo : int
+    - idLibro : int
+    - fechaEntrega : Date
+    - estadoLibro : String
+    + registrarDetalle()
+    + actualizarEstado()
+}
+
+class Reporte {
+    - idReporte : int
+    - tipoReporte : String
+    - fechaGeneracion : Date
+    - usuarioGenerador : String
+    + generarPDF()
+    + listarReportes()
+}
+
+Rol "1" -- "N" Usuario : posee
+Usuario "1" -- "N" Prestamo : registra
+Estudiante "1" -- "N" Prestamo : realiza
+Prestamo "1" -- "N" DetallePrestamo : contiene
+Libro "1" -- "N" DetallePrestamo : pertenece
+Libro "N" -- "1" Editorial : publicado_por
+Libro "1" -- "N" LibroCategoria
+Categoria "1" -- "N" LibroCategoria
+Libro "1" -- "N" AutorLibro
+Autor "1" -- "N" AutorLibro
+Usuario "1" -- "N" Reporte : genera
+
+@enduml
